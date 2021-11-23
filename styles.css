@@ -8,26 +8,35 @@ body {
 }
 
 input {
+    -webkit-appearance: none;
     font-family: 'Roboto', sans-serif;
     color: #fff;
     background-color: #303030;
     border: none;
     border-bottom: 1px solid #808080;
+    border-radius: 0.1em;
 
     outline: none;
     padding-bottom: 3px;
     width: 5em;
     margin: 0.5em;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
 input:focus {
-    animation: inputFocus 0.3s forwards;
+    animation: inputFocus 0.3s ease forwards;
 }
 
 @keyframes inputFocus {
     to {
+        background-color: #404040;
+
         border-bottom: 1px solid #fff;
         width: 4em;
         margin: 0em 1em;
+        padding-bottom: 0.5em;
     }
 }
 
