@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    background-color: #303030;
+    overflow-x: hidden;
+}
+
+input {
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    background-color: #303030;
+    border: none;
+    border-bottom: 1px solid #808080;
+
+    outline: none;
+    padding-bottom: 3px;
+    width: 5em;
+    margin: 0.5em;
+}
+input:focus {
+    animation: inputFocus 0.3s forwards;
+}
+
+@keyframes inputFocus {
+    to {
+        border-bottom: 1px solid #fff;
+        width: 4em;
+        margin: 0em 1em;
+    }
+}
+
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    background-color: #303030;
+    border: none;
+    border: 1px solid #fff;
+    border-radius: 0.3em;
+    outline: none;
+    padding-bottom: 3px;
+    width: 2em;
+    margin: 0.5em;
+
+    cursor: pointer;
+    
+}
+button:active {
+    background-color: #fff;
+    color: #303030;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.node {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    margin: 0.5em;
+    cursor: pointer;
+}
