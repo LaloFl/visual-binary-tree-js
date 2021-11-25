@@ -8,6 +8,7 @@ body {
 }
 
 input {
+    z-index: 1;
     -webkit-appearance: none;
     font-family: 'Roboto', sans-serif;
     color: #fff;
@@ -20,18 +21,19 @@ input {
     padding-bottom: 3px;
     width: 5em;
     margin: 0.5em;
+    animation: inputFocus 0.3s ease forwards;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 input:focus {
-    animation: inputFocus 0.3s ease forwards;
+    animation: inputFocusEnd 0.3s ease forwards;
 }
 
 @keyframes inputFocus {
     to {
-        background-color: #404040;
+        background-color: #444;
 
         border-bottom: 1px solid #fff;
         width: 4em;
@@ -39,9 +41,29 @@ input:focus {
         padding-bottom: 0.5em;
     }
 }
+@keyframes inputFocusEnd {
+    from {
+        background-color: #444;
+
+        border-bottom: 1px solid #fff;
+        width: 4em;
+        margin: 0em 1em;
+        padding-bottom: 0.5em;
+
+    }
+    to {
+        background-color: #333;
+
+        border-bottom: 1px solid #888;
+        width: 5em;
+        margin: 0.5em;
+        padding-bottom: 3px;
+    }
+}
 
 
 button {
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,13 +85,15 @@ button:active {
     background-color: #fff;
     color: #303030;
 }
+button:hover{
+    background-color: #444;
+}
 
-#root {
+#nodesBox {
+    position: relative;
     width: 100%;
-    height: 100%;
+    height: 60vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
 
@@ -80,13 +104,39 @@ button:active {
     justify-content: center;
     width: 100%;
     height: 100%;
+    border-bottom: #888 solid 1px;
+}
+
+#details {
+    width: 100%;
+    height: fit-content;
+    max-height: 800px;
+    border-top: #888 solid 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1em;
+}
+
+#nodesJSON {
+    overflow-y: scroll;
+    background-color: #353535;
+    border: #888 solid 1px;
+    padding: 0.5em;
+    border-radius: 0.3em;
+    width: 87%;
+    height: fit-content;
+    max-height: 800px;
 }
 
 .node {
-    width: 2em;
-    height: 2em;
+    position: relative;
+    max-width: 2em;
+    max-height: 2em;
+    min-width: 2em;
+    min-height: 2em;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: #8d7;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,4 +144,38 @@ button:active {
     font-weight: bold;
     margin: 0.5em;
     cursor: pointer;
+
+    animation: newNode 0.6s ease forwards;
 }
+
+svg {
+    z-index: -1;
+    overflow: hidden;
+    position: absolute;
+    size: fit-content;
+}
+
+line {
+    position: relative;
+    stroke: #fff;
+    stroke-width: 1;
+}
+
+.left, .right {
+    position: absolute;
+    top: 2em;
+}
+
+@keyframes newNode {
+    from {
+        transform: scale(0) rotate(-360deg);
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.left-child {
+    margin-right: 1em;
+}
+
