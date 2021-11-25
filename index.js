@@ -1,3 +1,5 @@
+document.getElementById("value").focus();
+var mainsvg = document.getElementById("mainsvg");
 let nodes = {};
 
 function addNode(nodeData) {
@@ -15,21 +17,22 @@ function addNode(nodeData) {
     }
     newNode.innerHTML = nodeData.value;
     parentNode.appendChild(newNode);
-    var parentRect = parentNode.getBoundingClientRect();
-    var newRect = newNode.getBoundingClientRect();
-    var line = document.createElement("line");
-    line.setAttribute("x1", parseInt(parentRect.x + parentRect.width / 2));
-    line.setAttribute("y1", parseInt(parentRect.y + parentRect.height / 2));
-    line.setAttribute("x2", parseInt(newRect.x + newRect.width / 2));
-    line.setAttribute("y2", parseInt(newRect.y + newRect.height / 2));
-    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    console.log(line, svg);
-    parentNode.appendChild(svg);
-    svg.append(line);
+    // add line 
+    if (nodeData.parentValue) {
+        var parentRect = parentNode.getBoundingClientRect();
+        var newRect = newNode.getBoundingClientRect();
+        var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+        line.setAttribute("x1", parseInt(parentRect.x + parentRect.width / 2));
+        line.setAttribute("y1", parseInt(parentRect.y + parentRect.height / 2));
+        line.setAttribute("x2", parseInt(newRect.x + newRect.width / 2));
+        line.setAttribute("y2", parseInt(newRect.y + newRect.height / 2));
+        mainsvg.appendChild(line);
+        console.log(line, mainsvg);
+    }
     return newNode;
 }
 
-document.getElementById("add").addEventListener("click", function () {
+const add = () => {
     if (document.getElementById("value").value != "") {
         let value = parseFloat(document.getElementById("value").value);
         document.getElementById("value").value = "";
@@ -78,7 +81,16 @@ document.getElementById("add").addEventListener("click", function () {
     document.getElementById("nodesJSON")
         .textContent = JSON.stringify(nodes, null, 4);
     document.getElementById("value").focus();
+}
+
+document.getElementById("add").addEventListener("click", function () {
+    add();
 });
+document.getElementById("value").addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        add();
+    }
+})
 
 const searchRecursive = (value, node) => {
     if (value === node.value) {

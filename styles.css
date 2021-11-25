@@ -8,7 +8,7 @@ body {
 }
 
 input {
-    z-index: 1;
+    z-index: 2;
     -webkit-appearance: none;
     font-family: 'Roboto', sans-serif;
     color: #fff;
@@ -63,7 +63,7 @@ input:focus {
 
 
 button {
-    z-index: 1;
+    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,6 +130,7 @@ button:hover{
 }
 
 .node {
+    z-index: 1;
     position: relative;
     max-width: 2em;
     max-height: 2em;
@@ -150,13 +151,17 @@ button:hover{
 
 svg {
     z-index: -1;
+    cursor: initial;
     overflow: hidden;
     position: absolute;
-    size: fit-content;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
 }
 
 line {
-    position: relative;
+    position: absolute;
     stroke: #fff;
     stroke-width: 1;
 }
