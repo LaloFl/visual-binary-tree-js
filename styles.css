@@ -145,8 +145,10 @@ button:hover{
     font-weight: bold;
     margin: 0.5em;
     cursor: pointer;
-
-    animation: newNode 0.6s ease forwards;
+    /* add shadows */
+    box-shadow: 0 0 0.5em #af9;
+    -webkit-box-shadow: 0 0 0.5em #af9;
+    -moz-box-shadow: 0 0 0.5em #af9;
 }
 
 svg {

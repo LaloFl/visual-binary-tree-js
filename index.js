@@ -1,14 +1,38 @@
 document.getElementById("value").focus();
 var mainsvg = document.getElementById("mainsvg");
+
 let nodes = {};
+let nodesRelations = [];
+
+//add window resize listener
+window.addEventListener("resize", function() {
+    if (nodesRelations.length <= 0) return;
+    for (let i = 0; i < nodesRelations.length; i++) {
+        let relation = `line${nodesRelations[i][0]}-${nodesRelations[i][1]}`;
+        let line = document.getElementById(relation);
+        let parentRect = document.getElementById(`node${nodesRelations[i][0]}`).getBoundingClientRect();
+        let childRect = document.getElementById(`node${nodesRelations[i][1]}`).getBoundingClientRect();
+        line.setAttribute("x1", parseInt(parentRect.x + parentRect.width / 2));
+        line.setAttribute("y1", parseInt(parentRect.y + parentRect.height / 2));
+        line.setAttribute("x2", parseInt(childRect.x + childRect.width / 2));
+        line.setAttribute("y2", parseInt(childRect.y + childRect.height / 2));
+    }
+})
 
 function addNode(nodeData) {
     var parentNode = document.getElementById(nodeData.parentValue ? "node"+nodeData.parentValue : "nodesBox");
     var newNode = document.createElement("span");
     newNode.setAttribute("class", `node ${nodeData.type}`);
     newNode.setAttribute("id", "node" + nodeData.value);
+    // add styles on newNode hover
+    newNode.addEventListener("mouseover", function() {
+        newNode.style.backgroundColor = "#bfa";
+    })
+    newNode.addEventListener("mouseout", function() {
+        newNode.style.backgroundColor = "#8d7";
+    });
     let spacing = (4 - nodeData.floor) * 50;
-    spacing = spacing < 30 ? 30 : spacing;
+    spacing = spacing < 25 ? 25 : spacing;
     if(nodeData.type === "left") {        
         newNode.style.right = `${spacing}px`
     }
@@ -19,6 +43,8 @@ function addNode(nodeData) {
     parentNode.appendChild(newNode);
     // add line 
     if (nodeData.parentValue) {
+        let relation = `line${nodeData.parentValue}-${nodeData.value}`
+        nodesRelations.push([nodeData.parentValue, nodeData.value]);
         var parentRect = parentNode.getBoundingClientRect();
         var newRect = newNode.getBoundingClientRect();
         var line = document.createElementNS('http://www.w3.org/2000/svg','line');
@@ -26,6 +52,7 @@ function addNode(nodeData) {
         line.setAttribute("y1", parseInt(parentRect.y + parentRect.height / 2));
         line.setAttribute("x2", parseInt(newRect.x + newRect.width / 2));
         line.setAttribute("y2", parseInt(newRect.y + newRect.height / 2));
+        line.setAttribute("id", relation);
         mainsvg.appendChild(line);
         console.log(line, mainsvg);
     }
@@ -83,9 +110,7 @@ const add = () => {
     document.getElementById("value").focus();
 }
 
-document.getElementById("add").addEventListener("click", function () {
-    add();
-});
+document.getElementById("add").addEventListener("click", add);
 document.getElementById("value").addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
         add();
