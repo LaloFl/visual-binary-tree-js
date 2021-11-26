@@ -31,7 +31,9 @@ function addNode(nodeData) {
     newNode.addEventListener("mouseout", function() {
         newNode.style.backgroundColor = "#8d7";
     });
-    let spacing = (4 - nodeData.floor) * 50;
+    // get window width
+    let windowWidth = window.innerWidth;
+    let spacing = windowWidth > 520 ? (4 - nodeData.floor) * 50 : (4 - nodeData.floor) * 30;
     spacing = spacing < 25 ? 25 : spacing;
     if(nodeData.type === "left") {        
         newNode.style.right = `${spacing}px`
